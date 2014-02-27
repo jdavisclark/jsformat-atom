@@ -7,7 +7,7 @@
     "activationEvents": [
         "jsformat:format"
     ],
-    "repository": "https://github.com/atom/jsformat",
+    "repository": "https://github.com/jdc0589/jsformat-atom",
     "license": "MIT",
     "engines": {
         "atom": ">0.50.0"
