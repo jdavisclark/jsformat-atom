@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "description": "javascript formatting for the atom text editor",
+    "keywords": ["format", "javascript", "beautify", "prettify"],
     "activationEvents": [
         "jsformat:format"
     ],
