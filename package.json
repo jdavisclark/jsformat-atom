@@ -1,19 +1,24 @@
 {
-    "name": "jsformat",
-    "main": "./lib/format",
-    "version": "0.0.1",
-    "private": true,
-    "description": "javascript formatting for the atom text editor",
-    "keywords": ["format", "javascript", "beautify", "prettify"],
-    "activationEvents": [
-        "jsformat:format"
-    ],
-    "repository": "https://github.com/jdc0589/jsformat-atom",
-    "license": "MIT",
-    "engines": {
-        "atom": ">0.50.0"
-    },
-    "dependencies": {
-        "js-beautify": "~1.4.2"
-    }
+  "name": "jsformat",
+  "main": "./lib/format",
+  "version": "0.0.2",
+  "private": true,
+  "description": "javascript formatting for the atom text editor",
+  "keywords": [
+    "format",
+    "javascript",
+    "beautify",
+    "prettify"
+  ],
+  "activationEvents": [
+    "jsformat:format"
+  ],
+  "repository": "https://github.com/jdc0589/jsformat-atom",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "js-beautify": "~1.4.2"
+  }
 }
