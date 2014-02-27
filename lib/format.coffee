@@ -9,6 +9,10 @@ module.exports =
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
+
+    if !editor
+      return
+
     ext = path.extname editor.getTitle()
 
     if ext == '.js' or ext == '.json'

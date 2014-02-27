@@ -11,6 +11,7 @@ class NotSupportedNotificationView extends View
     editor = atom.workspace.activePaneItem
     title = editor.getTitle()
     ext = path.extname title
+    message = if ext.length > 0 then ext else title
 
     @div class: 'test overlay from-top', =>
-      @div "Format: '#{ext}' files not yet supported.", class: "message"
+      @div "Format: '#{message}' files not yet supported.", class: "message"
