@@ -1,6 +1,12 @@
 # JsFormat
 
-Javascript formatting for the Atom text editor.
+Javascript + json formatting/beautification for the Atom text editor.
+
+#### Keybinding
+`ctrl+alt+f`
+
+#### Command Palette
+`JsFormat: Format`
 
 #### Warning
 This project is insanely pre-alpha.
