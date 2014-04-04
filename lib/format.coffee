@@ -25,7 +25,10 @@ module.exports =
 
       setTimeout destroyer, 1500
 
-
   formatJavascript: (editor) ->
-    opts = {}
+    settings = atom.config.getSettings().editor
+    opts = {
+      indent_size: settings.tabLength,
+      wrap_line_length: settings.preferredLineLength
+    }
     editor.setText(jsbeautify(editor.getText(), opts))
