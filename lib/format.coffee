@@ -17,10 +17,32 @@ module.exports =
     eval_code: false,
     unescape_strings: false,
     break_chained_methods: false,
-    e4x: false
+    e4x: false,
+    format_on_save: true
 
   activate: (state) ->
-    atom.workspaceView.command "jsformat:format", => @format(state)
+    atom.workspaceView.command "jsformat:format", => @format state
+
+    atom.config.observe 'jsformat.format_on_save', =>
+      @configureEvents()
+
+  deactivate: ->
+    atom.workspaceView.eachEditorView (editorView) =>
+      @handleEvents(editorView, false)
+
+  configureEvents: ->
+    atom.workspaceView.eachEditorView (editorView) =>
+      @handleEvents(editorView, atom.config.get('jsformat.format_on_save'))
+
+  handleEvents: (editorView, add) ->
+    editor = editorView.getEditor()
+    buffer = editor.getBuffer()
+    if add
+      buffer.on 'will-be-saved', => @format()
+      editor.on 'destroyed', => buffer.off 'will-be-saved'
+    else
+      buffer.off 'will-be-saved'
+      editor.off 'destroyed'
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
@@ -32,7 +54,7 @@ module.exports =
 
     if ext == '.js' or ext == '.json'
       @formatJavascript editor
-    else
+    else if state
       notification = new FileTypeNotSupportedView(state)
       atom.workspaceView.append(notification)
       destroyer = () ->
