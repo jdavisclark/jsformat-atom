@@ -50,4 +50,13 @@ module.exports =
     for configKey, defaultValue of @configDefaults
       opts[configKey] = atom.config.get('jsformat.' + configKey) ? defaultValue
 
-    editor.setText(jsbeautify(editor.getText(), opts))
+    if @selectionsAreEmpty editor
+      editor.setText(jsbeautify(editor.getText(), opts))
+    else
+      for selection in editor.getSelections()
+        selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
+
+  selectionsAreEmpty: (editor) ->
+    for selection in editor.getSelections()
+      return false unless selection.isEmpty()
+    true
