@@ -1,6 +1,5 @@
 FileTypeNotSupportedView = require './not-supported-view'
 
-path = require 'path'
 jsbeautify = (require 'js-beautify').js_beautify
 
 module.exports =
