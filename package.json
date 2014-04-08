@@ -1,7 +1,7 @@
 {
   "name": "jsformat",
   "main": "./lib/format",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "private": true,
   "description": "javascript formatting for the atom text editor",
   "keywords": [
