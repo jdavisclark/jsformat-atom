@@ -50,9 +50,9 @@ module.exports =
     if !editor
       return
 
-    ext = path.extname editor.getTitle()
+    grammar = editor.getGrammar()?.scopeName
 
-    if ext == '.js' or ext == '.json'
+    if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript editor
     else if state
       notification = new FileTypeNotSupportedView(state)
