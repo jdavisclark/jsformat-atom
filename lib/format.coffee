@@ -50,4 +50,6 @@ module.exports =
     for configKey, defaultValue of @configDefaults
       opts[configKey] = atom.config.get('jsformat.' + configKey) ? defaultValue
 
+    cursorPosition = editor.getCursorBufferPosition()
     editor.setText(jsbeautify(editor.getText(), opts))
+    editor.setCursorBufferPosition(cursorPosition)
