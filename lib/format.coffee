@@ -1,6 +1,5 @@
 FileTypeNotSupportedView = require './not-supported-view'
 
-path = require 'path'
 jsbeautify = (require 'js-beautify').js_beautify
 
 module.exports =
@@ -28,9 +27,9 @@ module.exports =
     if !editor
       return
 
-    ext = path.extname editor.getTitle()
+    grammar = editor.getGrammar()?.scopeName
 
-    if ext == '.js' or ext == '.json'
+    if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript editor
     else
       notification = new FileTypeNotSupportedView(state)
