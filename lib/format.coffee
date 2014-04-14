@@ -1,6 +1,5 @@
 FileTypeNotSupportedView = require './not-supported-view'
 
-path = require 'path'
 jsbeautify = (require 'js-beautify').js_beautify
 
 module.exports =
@@ -28,9 +27,9 @@ module.exports =
     if !editor
       return
 
-    ext = path.extname editor.getTitle()
+    grammar = editor.getGrammar()?.scopeName
 
-    if ext == '.js' or ext == '.json'
+    if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript editor
     else
       notification = new FileTypeNotSupportedView(state)
@@ -50,4 +49,13 @@ module.exports =
     for configKey, defaultValue of @configDefaults
       opts[configKey] = atom.config.get('jsformat.' + configKey) ? defaultValue
 
-    editor.setText(jsbeautify(editor.getText(), opts))
+    if @selectionsAreEmpty editor
+      editor.setText(jsbeautify(editor.getText(), opts))
+    else
+      for selection in editor.getSelections()
+        selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
+
+  selectionsAreEmpty: (editor) ->
+    for selection in editor.getSelections()
+      return false unless selection.isEmpty()
+    true
