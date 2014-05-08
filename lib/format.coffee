@@ -42,7 +42,7 @@ module.exports =
   formatJavascript: (editor) ->
     settings = atom.config.getSettings().editor
     opts = {
-      indent_size: settings.tabLength,
+      indent_size: editor.getTabLength(),
       wrap_line_length: settings.preferredLineLength
     }
 
