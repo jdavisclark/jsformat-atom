@@ -19,6 +19,6 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "js-beautify": "~1.4.2"
+    "js-beautify": "~1.5.1"
   }
 }
