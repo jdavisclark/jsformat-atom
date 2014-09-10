@@ -4,6 +4,7 @@ jsbeautify = (require 'js-beautify').js_beautify
 
 module.exports =
   configDefaults:
+    format_on_save: true,
     indent_with_tabs: false,
     max_preserve_newlines: 4,
     preserve_newlines: true,
@@ -26,6 +27,9 @@ module.exports =
 
     if !editor
       return
+      
+    if atom.config.get('jsformat.format_on_save')
+      @subscribeToEvents(editor)
 
     grammar = editor.getGrammar()?.scopeName
 
@@ -59,3 +63,16 @@ module.exports =
     for selection in editor.getSelections()
       return false unless selection.isEmpty()
     true
+    
+  subscribeToEvents: (editor) ->
+    buffer = editor.getBuffer()
+    bufferSavedSubscription = @subscribe buffer, 'on-will-save', =>
+      buffer.transact =>
+        @formatJavascript(editor)
+
+    @subscribe editor, 'destroyed', =>
+      bufferSavedSubscription.off()
+      @unsubscribe(editor)
+
+    @subscribe buffer, 'destroyed', =>
+      @unsubscribe(buffer)
