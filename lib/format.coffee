@@ -66,7 +66,7 @@ module.exports =
 
   subscribeToEvents: (editor) ->
     buffer = editor.getBuffer()
-    bufferSavedSubscription = @subscribe buffer, 'will-be-saved', => # 'on-will-save'
+    bufferSavedSubscription = @subscribe buffer, 'on-will-save', =>
       buffer.transact =>
         @formatJavascript(editor)
 
