@@ -22,14 +22,15 @@ module.exports =
   activate: (state) ->
     atom.workspaceView.command "jsformat:format", => @format(state)
 
+    if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
+      # probably shouldn't be assuming .getActivePaneItem always returns an editor
+      @subscribeToEvents(atom.workspace.getActivePaneItem())
+
   format: (state) ->
     editor = atom.workspace.activePaneItem
 
     if !editor
       return
-
-    if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
-      @subscribeToEvents(editor)
 
     grammar = editor.getGrammar()?.scopeName
 
@@ -66,13 +67,29 @@ module.exports =
 
   subscribeToEvents: (editor) ->
     buffer = editor.getBuffer()
-    bufferSavedSubscription = @subscribe buffer, 'on-will-save', =>
-      buffer.transact =>
-        @formatJavascript(editor)
+    grammar = editor.getGrammar()?.scopeName
 
-    @subscribe editor, 'destroyed', =>
-      bufferSavedSubscription.off()
-      @unsubscribe(editor)
+    if grammar is 'source.json' or grammar is 'source.js'
+      # event is only attached once user has called JSFormat once,
+      # figure out how to set this up at the beginning on any supported file
+      #
+      # figure out how to destroy the subscription, this variable
+      # seems to be inaccessible once the event has been subscribed
+      subscription = buffer.onWillSave ->
+        buffer.transact ->
+          # figure out how to not have to call module.exports
+          module.exports.formatJavascript editor
+    else
+      notification = new FileTypeNotSupportedView(state)
+      atom.workspaceView.append(notification)
+      destroyer = () ->
+        notification.detach()
 
-    @subscribe buffer, 'destroyed', =>
-      @unsubscribe(buffer)
+      setTimeout destroyer, 1500
+
+    # @subscribe editor, 'destroyed', =>
+    #   bufferSavedSubscription.off()
+    #   @unsubscribe(editor)
+    #
+    # @subscribe buffer, 'destroyed', =>
+    #   @unsubscribe(buffer)
