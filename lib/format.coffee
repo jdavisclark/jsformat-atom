@@ -23,8 +23,21 @@ module.exports =
     atom.workspaceView.command "jsformat:format", => @format(state)
 
     if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
-      # probably shouldn't be assuming .getActivePaneItem always returns an editor
-      @subscribeToEvents(atom.workspace.getActivePaneItem())
+      # event is only attached once user has called JSFormat once,
+      # figure out how to set this up at the beginning on any supported file
+      buffer = atom.workspace.getActivePaneItem().getBuffer()
+
+      @editorCreationSubscription = atom.workspace.onDidAddTextEditor (event) =>
+        grammar = event.textEditor.getGrammar()?.scopeName
+
+        if grammar is 'source.json' or grammar is 'source.js'
+          @fileSaveSubscription = buffer.onWillSave =>
+            buffer.transact =>
+              @formatJavascript(state)
+
+          @fileCloseSubscription = buffer.onDidDestroy =>
+            @fileSaveSubscription.dispose()
+            @fileCloseSubscription.dispose()
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
@@ -64,32 +77,3 @@ module.exports =
     for selection in editor.getSelections()
       return false unless selection.isEmpty()
     true
-
-  subscribeToEvents: (editor) ->
-    buffer = editor.getBuffer()
-    grammar = editor.getGrammar()?.scopeName
-
-    if grammar is 'source.json' or grammar is 'source.js'
-      # event is only attached once user has called JSFormat once,
-      # figure out how to set this up at the beginning on any supported file
-      #
-      # figure out how to destroy the subscription, this variable
-      # seems to be inaccessible once the event has been subscribed
-      subscription = buffer.onWillSave ->
-        buffer.transact ->
-          # figure out how to not have to call module.exports
-          module.exports.formatJavascript editor
-    else
-      notification = new FileTypeNotSupportedView(state)
-      atom.workspaceView.append(notification)
-      destroyer = () ->
-        notification.detach()
-
-      setTimeout destroyer, 1500
-
-    # @subscribe editor, 'destroyed', =>
-    #   bufferSavedSubscription.off()
-    #   @unsubscribe(editor)
-    #
-    # @subscribe buffer, 'destroyed', =>
-    #   @unsubscribe(buffer)
