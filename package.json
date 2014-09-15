@@ -10,9 +10,7 @@
     "beautify",
     "prettify"
   ],
-  "activationEvents": [
-    "jsformat:format"
-  ],
+  "activationEvents": [],
   "repository": "https://github.com/jdc0589/jsformat-atom",
   "license": "MIT",
   "engines": {
