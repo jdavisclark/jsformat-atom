@@ -20,24 +20,29 @@ module.exports =
     e4x: false
 
   activate: (state) ->
-    atom.workspaceView.command "jsformat:format", => @format(state)
+    atom.workspaceView.command 'jsformat:format', => @format(state)
 
     if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
-      # event is only attached once user has called JSFormat once,
-      # figure out how to set this up at the beginning on any supported file
-      buffer = atom.workspace.getActivePaneItem().getBuffer()
+      @editorSaveSubscriptions = {}
+      @editorCloseSubscriptions = {}
 
-      @editorCreationSubscription = atom.workspace.onDidAddTextEditor (event) =>
-        grammar = event.textEditor.getGrammar()?.scopeName
+      @editorCreationSubscription = atom.workspaceView.eachEditorView (editorView) =>
+        editor = editorView.getEditor()
+        grammar = editor.getGrammar().scopeName
 
-        if grammar is 'source.json' or grammar is 'source.js'
-          @fileSaveSubscription = buffer.onWillSave =>
+        if grammar is 'source.js' or grammar is 'source.json'
+          buffer = editor.getBuffer()
+
+          @editorSaveSubscriptions[editor.id] = buffer.onWillSave =>
             buffer.transact =>
-              @formatJavascript(state)
+              @formatJavascript(editor)
 
-          @fileCloseSubscription = buffer.onDidDestroy =>
-            @fileSaveSubscription.dispose()
-            @fileCloseSubscription.dispose()
+          @editorCloseSubscriptions[editor.id] = buffer.onDidDestroy =>
+            @editorSaveSubscriptions[editor.id].dispose()
+            @editorCloseSubscriptions[editor.id].dispose()
+
+            delete @editorSaveSubscriptions[editor.id]
+            delete @editorCloseSubscriptions[editor.id]
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
