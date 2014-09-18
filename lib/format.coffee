@@ -25,8 +25,6 @@ module.exports =
     @editorSaveSubscriptions = {}
     @editorCloseSubscriptions = {}
 
-    @subscribeToEvents()
-
     atom.config.observe 'jsformat.format_on_save', =>
       @subscribeToEvents()
 
