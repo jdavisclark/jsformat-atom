@@ -35,9 +35,61 @@ module.exports =
       return
 
     grammar = editor.getGrammar()?.scopeName
+    mainCursor = editor.getCursors()[0]
+    textBuffer = editor.getBuffer()
+    nonWhitespaceRegex = /\S/g
+    whitespaceRegex = /\s/g
+    currentCursorPosition = mainCursor.getBufferPosition()
+    mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1])
+    isInsideWord = mainCursor.isInsideWord()
+    mainCursor.setBufferPosition(currentCursorPosition)
+
+    if mainCursor.isInsideWord()
+      # The cursor is inside a word, so let's use the beginning as the reference
+      #
+      currentPosition = mainCursor.getBeginningOfCurrentWordBufferPosition()
+
+      # ideally we could do mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1]).isInsideWord()
+      # but .setBufferPosition returns undefined :(
+      # So we have to define some stuff above instead...
+
+    else if isInsideWord
+      # The cursor is right before a word in this case, so let's use the current cursor position as a reference
+      #
+      mainCursor.setBufferPosition(currentCursorPosition)
+      currentPosition = currentCursorPosition()
+
+    whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
+
+    nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
+    whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
+
+    if !whitespaceCharacterCount
+      whitespaceCharacterCount = 0
+    else
+      whitespaceCharacterCount = whitespaceCharacterCount.length
+
+    if !nonWhitespaceCharacters
+      nonWhitespaceCharacters = 0
+    else
+      nonWhitespaceCharacters = nonWhitespaceCharacters.length
 
     if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript editor
+
+      nonWhitespaceCount = 0
+      text = editor.getText()
+
+      for i in [0...text.length]
+        if /\S/.test(text.charAt(i))
+          nonWhitespaceCount++
+          if nonWhitespaceCount == nonWhitespaceCharacters.length
+            break
+
+      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCount + whitespaceCharacterCount);
+
+      mainCursor.setBufferPosition(newCursorPosition)
+
     else
       notification = new FileTypeNotSupportedView(state)
       atom.workspaceView.append(notification)
@@ -58,6 +110,7 @@ module.exports =
 
     if @selectionsAreEmpty editor
       editor.setText(jsbeautify(editor.getText(), opts))
+
     else
       for selection in editor.getSelections()
         selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
@@ -67,7 +120,7 @@ module.exports =
       return false unless selection.isEmpty()
     true
 
-  subscribeToEvents: ->
+  subscribeToEvents: (state) ->
     if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
       @editorCreationSubscription = atom.workspaceView.eachEditorView (editorView) =>
         editor = editorView.getEditor()
@@ -78,7 +131,7 @@ module.exports =
 
           @editorSaveSubscriptions[editor.id] = buffer.onWillSave =>
             buffer.transact =>
-              @formatJavascript(editor)
+              @format(state)
 
           @editorCloseSubscriptions[editor.id] = buffer.onDidDestroy =>
             @editorSaveSubscriptions[editor.id].dispose()
