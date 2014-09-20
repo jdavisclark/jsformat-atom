@@ -1,3 +1,9 @@
+# 0.5.0
+
+Cursor position is now positioned more accurately by using its location before formatting the file/selection
+Added a CHANGELOG.md file with all the versions
+Updated README.md with `format_on_save` setting information.
+
 # 0.3.2
 
 Fixed issue where closing a file would cause Atom to freeze because of extra subscribers from format on save
