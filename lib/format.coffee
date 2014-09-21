@@ -41,7 +41,7 @@ module.exports =
     whitespaceRegex = /\s/g
     currentCursorPosition = mainCursor.getBufferPosition()
     mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1])
-    isInsideWord = mainCursor.isInsideWord()
+    isBeforeWord = mainCursor.isInsideWord()
     mainCursor.setBufferPosition(currentCursorPosition)
 
     if mainCursor.isInsideWord()
@@ -53,7 +53,7 @@ module.exports =
       # but .setBufferPosition returns undefined :(
       # So we have to define some stuff above instead...
 
-    else if isInsideWord
+    else if isBeforeWord
       # The cursor is right before a word in this case, so let's use the current cursor position as a reference
       #
       mainCursor.setBufferPosition(currentCursorPosition)
