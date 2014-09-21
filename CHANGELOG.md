@@ -1,3 +1,7 @@
+# 0.6.4
+
+Fixed error in cursor position fix
+
 # 0.6.3
 
 Started working spec files
