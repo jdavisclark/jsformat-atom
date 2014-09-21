@@ -1,3 +1,7 @@
+# 0.6.1
+
+Updated CHANGELOG.md
+
 # 0.6.0
 
 Cursor position is now positioned more accurately by using its location before formatting the file/selection
