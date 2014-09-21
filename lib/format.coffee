@@ -57,7 +57,7 @@ module.exports =
       # The cursor is right before a word in this case, so let's use the current cursor position as a reference
       #
       mainCursor.setBufferPosition(currentCursorPosition)
-      currentPosition = currentCursorPosition()
+      currentPosition = currentCursorPosition
 
     whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
 
