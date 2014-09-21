@@ -80,13 +80,7 @@ module.exports =
       nonWhitespaceCount = 0
       text = editor.getText()
 
-      for i in [0...text.length]
-        if /\S/.test(text.charAt(i))
-          nonWhitespaceCount++
-          if nonWhitespaceCount == nonWhitespaceCharacters.length
-            break
-
-      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCount + whitespaceCharacterCount);
+      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCharacters + whitespaceCharacterCount);
 
       mainCursor.setBufferPosition(newCursorPosition)
 
