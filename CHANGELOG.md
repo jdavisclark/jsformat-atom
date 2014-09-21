@@ -1,3 +1,8 @@
+# 0.6.7
+
+Fixed Observer class not being exported  
+Started working on using the Observer class
+
 # 0.6.6
 
 Moved to workspace model API to prevent deprecation warnings about workspaceView API
