@@ -1,4 +1,5 @@
 FileTypeNotSupportedView = require './not-supported-view'
+Observer = require './observer'
 
 jsbeautify = (require 'js-beautify').js_beautify
 
@@ -116,8 +117,7 @@ module.exports =
 
   subscribeToEvents: (state) ->
     if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
-      @editorCreationSubscription = atom.workspaceView.eachEditorView (editorView) =>
-        editor = editorView.getEditor()
+      @editorCreationSubscription = atom.workspace.observeTextEditors (editor) =>
         grammar = editor.getGrammar().scopeName
 
         if grammar is 'source.js' or grammar is 'source.json'
@@ -135,7 +135,7 @@ module.exports =
             delete @editorCloseSubscriptions[editor.id]
     else
       if @editorCreationSubscription
-        @editorCreationSubscription.off()
+        @editorCreationSubscription.dispose()
         @editorCreationSubscription = null
 
         for subscriptionId, subscription of @editorSaveSubscriptions
