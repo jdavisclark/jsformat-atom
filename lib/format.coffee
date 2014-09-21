@@ -26,6 +26,9 @@ module.exports =
     @editorSaveSubscriptions = {}
     @editorCloseSubscriptions = {}
 
+    # @editorSaveSubscriptions = new Observer()
+    # @editorCloseSubscriptions = new Observer()
+
     atom.config.observe 'jsformat.format_on_save', =>
       @subscribeToEvents()
 
@@ -133,6 +136,17 @@ module.exports =
 
             delete @editorSaveSubscriptions[editor.id]
             delete @editorCloseSubscriptions[editor.id]
+
+
+          # saveSubscription = buffer.onWillSave =>
+          #   buffer.transact =>
+          #     @format(state)
+          #
+          # closeSubscription = buffer.onDidDestroy =>
+          #   debugger
+          #
+          # @editorSaveSubscriptions.addSubscription(saveSubscription)
+          # @editorCloseSubscriptions.addSubscription(closeSubscription)
     else
       if @editorCreationSubscription
         @editorCreationSubscription.dispose()
@@ -145,3 +159,9 @@ module.exports =
         for subscriptionId, subscription of @editorCloseSubscriptions
           subscription.dispose()
           delete @editorCloseSubscriptions[subscriptionId]
+
+        # @editorSaveSubscriptions.dispose()
+        # @editorSaveSubscriptions = new Observer()
+        #
+        # @editorCloseSubscriptions.dispose()
+        # @editorCloseSubscriptions = new Observer()
