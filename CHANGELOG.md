@@ -1,3 +1,7 @@
+# 0.6.6
+
+Moved to workspace model API to prevent deprecation warnings about workspaceView API
+
 # 0.6.5
 
 Cursor repositioning now works a lot better
