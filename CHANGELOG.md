@@ -1,3 +1,7 @@
+# 0.6.5
+
+Cursor repositioning now works a lot better
+
 # 0.6.4
 
 Fixed error in cursor position fix
