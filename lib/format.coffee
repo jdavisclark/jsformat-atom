@@ -1,24 +1,14 @@
-FileTypeNotSupportedView = require './not-supported-view'
-Observer = require './observer'
-
+###
+ Package dependencies
+###
 jsbeautify = (require 'js-beautify').js_beautify
 
+packgeConfig = require './config'
+Observer = require './observer'
+FileTypeNotSupportedView = require './not-supported-view'
+
 module.exports =
-  configDefaults:
-    format_on_save: true,
-    indent_with_tabs: false,
-    max_preserve_newlines: 4,
-    preserve_newlines: true,
-    space_in_paren: false,
-    jslint_happy: false,
-    brace_style: "collapse",
-    keep_array_indentation: false,
-    keep_function_indentation: false,
-    space_before_conditional: true,
-    eval_code: false,
-    unescape_strings: false,
-    break_chained_methods: false,
-    e4x: false
+  config: packgeConfig
 
   activate: (state) ->
     atom.workspaceView.command 'jsformat:format', => @format(state)
@@ -34,7 +24,7 @@ module.exports =
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
-
+    debugger
     if !editor
       return
 
