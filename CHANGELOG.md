@@ -1,77 +1,80 @@
+# 0.7.0
+
+* Switched to Atom's new v0.133.0 config schema
+
 # 0.6.7
 
-Fixed Observer class not being exported  
-Started working on using the Observer class
+* Fixed Observer class not being exported  
+* Started working on using the Observer class
 
 # 0.6.6
 
-Moved to workspace model API to prevent deprecation warnings about workspaceView API
+* Moved to workspace model API to prevent deprecation warnings about workspaceView API
 
 # 0.6.5
 
-Cursor repositioning now works a lot better
+* Cursor repositioning now works a lot better
 
 # 0.6.4
 
-Fixed error in cursor position fix
+* Fixed error in cursor position fix
 
 # 0.6.3
 
-Started working spec files
+* Started working spec files
 
 # 0.6.2
 
-Updated CHANGELOG.md
+* Updated CHANGELOG.md
 
 # 0.6.0
 
-Cursor position is now positioned more accurately by using its location before formatting the file/selection  
-Added a CHANGELOG.md file with all the versions  
-Updated README.md with `format_on_save` setting information  
+* Cursor position is now positioned more accurately by using its location before formatting the file/selection  
+* Added a CHANGELOG.md file with all the versions  
+* Updated README.md with `format_on_save` setting information  
 
 # 0.3.2
 
-Fixed issue where closing a file would cause Atom to freeze because of extra subscribers from format on save
+* Fixed issue where closing a file would cause Atom to freeze because of extra subscribers from format on save
 
 # 0.3.0
 
-Format on save functionality added
+* Format on save functionality added
 
 # 0.2.1
 
-Uses editor's tablength to format text
+* Uses editor's tablength to format text
 
 # 0.2.0
 
-Added the ability to format currently selected text
-
-Now using file's grammar (which can be manually set by user) to decide whether or not to format the selection/file
+* Added the ability to format currently selected text
+* Now using file's grammar (which can be manually set by user) to decide whether or not to format the selection/file
 
 # 0.1.0
 
-Added a lot more settings and configuration options
+* Added a lot more settings and configuration options
 
 # 0.0.6
 
-Fixed issue when no editors are open
-Fixed not supported view message
+* Fixed issue when no editors are open
+* Fixed not supported view message
 
 # 0.0.5
 
-Improved the readme
+* Improved the readme
 
 # 0.0.4
 
-No changes, test publish
+* No changes, test publish
 
 # 0.0.3
 
-Fixed package.json formatting
+* Fixed package.json formatting
 
 # 0.0.2
 
-Added keywords to package.json to make package easier to find
+* Added keywords to package.json to make package easier to find
 
 # 0.0.1
 
-Initial JSFormat plugin
+* Initial JSFormat plugin
