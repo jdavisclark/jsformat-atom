@@ -1,3 +1,7 @@
+# [0.7.1]()
+
+* Added support for JS-Beautify's `space_after_anon_function` option.
+
 # [0.7.0](30d27619df09947825944d17ed3fa8bd5ea373ec)
 
 * Switched to Atom's new v0.133.0 config schema
