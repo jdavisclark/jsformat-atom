@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "event-kit": "~0.7.2",
-    "js-beautify": "~1.5.1"
+    "js-beautify": "~1.5.2"
   }
 }
