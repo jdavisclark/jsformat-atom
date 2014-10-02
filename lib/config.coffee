@@ -28,6 +28,9 @@ module.exports =
   keep_function_indentation:
     type: 'boolean'
     default: false
+  space_after_anon_function:
+    type: 'boolean',
+    default: false
   space_before_conditional:
     type: 'boolean'
     default: true
