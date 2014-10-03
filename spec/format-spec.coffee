@@ -10,7 +10,7 @@ describe "JSFormat package tests", ->
 
   # JSFormat tests here
 
-  describe "when the textbuffer is being formatted" ->
+  describe "when the textbuffer is being formatted", ->
     beforeEach ->
       atom.workspaceView.attachToDom()
 
