@@ -3,7 +3,7 @@ module.exports =
   format_on_save:
     type: 'boolean'
     default: true
-    description: 'Enabling will allow JSFormat to format all supported files before the file is saved'
+    description: 'JSFormat will format the file before it is saved'
   indent_with_tabs:
     type: 'boolean'
     default: false
