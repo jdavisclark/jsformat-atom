@@ -28,6 +28,26 @@ describe "JSFormat package tests", ->
         # just check that some whitespace and other goodies got added
         expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(@fileText)
 
+    it "can format a selection of the whole buffer with the use of the command", ->
+      # general format test
+
+      waitsForPromise ->
+        atom.workspace.open('specfiles/index.js')
+
+      runs ->
+        # select text until end of first require
+        atom.workspace.getActiveTextEditor().setSelectedBufferRange([[0, 0], [14, 7]])
+        fileText = atom.workspace.getActiveTextEditor().getSelectedText()
+        restOfFileText = atom.workspace.getActiveTextEditor().getTextInBufferRange([[15, 0], [31, 0]])
+        atom.workspaceView.getActiveView().trigger 'jsformat:format'
+
+      runs ->
+        # check that some whitespace and other goodies got added
+        expect(atom.workspace.getActiveTextEditor().getSelectedText()).not.toMatch(fileText)
+        # check that the rest of the file wasn't touched
+        expect(atom.workspace.getActiveTextEditor().getTextInBufferRange([[15, 0], [31, 0]])).not.toMatch(restOfFileText)
+
+
     it "can format the whole buffer if Format on save is turned on", ->
       # format_on_save test
 
