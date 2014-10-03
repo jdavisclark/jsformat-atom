@@ -42,3 +42,19 @@ describe "JSFormat package tests", ->
         # just check that some whitespace and other goodies got added
         expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(fileText)
         atom.config.set('jsformat.format_on_save', false)
+
+    it "displays a notification for unsupported languages", ->
+      # NotSupportedNotificationView test
+
+      displayUnsupportedLanguageNotification = jasmine.createSpy('format.displayUnsupportedLanguageNotification')
+
+      waitsForPromise ->
+        atom.workspace.open('xyz.coffee')
+
+      runs ->
+        atom.workspaceView.getActiveView().trigger('jsformat:format')
+        displayUnsupportedLanguageNotification()
+
+        # TODO seems a little stupid to expect something I'm calling, but I can't figure it out, so this is a placeholder
+
+        expect(displayUnsupportedLanguageNotification.calls.length).toEqual(1)
