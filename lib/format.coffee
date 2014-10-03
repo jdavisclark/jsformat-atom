@@ -24,7 +24,6 @@ module.exports =
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
-    debugger
     if !editor
       return
 
