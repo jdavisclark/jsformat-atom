@@ -3,6 +3,7 @@ module.exports =
   format_on_save:
     type: 'boolean'
     default: true
+    description: 'Enabling will allow JSFormat to format all supported files before the file is saved'
   indent_with_tabs:
     type: 'boolean'
     default: false
@@ -15,9 +16,11 @@ module.exports =
   space_in_paren:
     type: 'boolean'
     default: false
+    title: 'Space in parentheses'
   jslint_happy:
     type: 'boolean'
     default: false
+    title: 'JSLint happy'
   brace_style:
     type: 'string'
     default: 'collapse'
@@ -29,14 +32,16 @@ module.exports =
     type: 'boolean'
     default: false
   space_after_anon_function:
-    type: 'boolean',
+    type: 'boolean'
     default: false
+    title: 'Space after anonymous functions'
   space_before_conditional:
     type: 'boolean'
     default: true
   eval_code:
     type: 'boolean'
     default: false
+    title: 'Evaluate code'
   unescape_strings:
     type: 'boolean'
     default: false
@@ -46,3 +51,4 @@ module.exports =
   e4x:
     type: 'boolean'
     default: false
+    title: 'e4x style'
