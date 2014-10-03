@@ -1,4 +1,4 @@
-# [0.7.5]()
+# [0.7.5](330b5cbc654618e142713a95c0147b0ca117fa68)
 
 * Better config page
 * More tests
