@@ -1,6 +1,15 @@
-# [0.7.3]()
+# [0.7.5]()
 
-Made retrieving package config simpler and faster
+* Better config page
+* More tests
+
+# [0.7.4](b42275f887278b6df0566811056e989007cdc645)
+
+* Fixed error in tests, all current tests should pass
+
+# [0.7.3](edf6256095dcc340511375cb60abd369767aa279)
+
+* Made retrieving package config simpler and faster
 
 # [0.7.2](4df0961a82b4b3f9c6c5da41f51a0d7716520869)
 
