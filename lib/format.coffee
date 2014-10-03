@@ -1,154 +1,60 @@
-###
- Package dependencies
-###
-jsbeautify = (require 'js-beautify').js_beautify
+{WorkspaceView} = require 'atom'
+require 'fs'
 
-packgeConfig = require './config'
-Observer = require './observer'
-FileTypeNotSupportedView = require './not-supported-view'
+format = require '../lib/format'
 
-module.exports =
-  config: packgeConfig
+describe "JSFormat package tests", ->
+  beforeEach ->
+    atom.workspaceView = new WorkspaceView()
+    atom.workspace = atom.workspaceView.model
 
-  activate: (state) ->
-    atom.workspaceView.command 'jsformat:format', => @format(state)
+  # JSFormat tests here
 
-    @editorSaveSubscriptions = {}
-    @editorCloseSubscriptions = {}
+  describe "when the textbuffer is being formatted", ->
+    beforeEach ->
+      atom.workspaceView.attachToDom()
 
-    # @editorSaveSubscriptions = new Observer()
-    # @editorCloseSubscriptions = new Observer()
+    it "can format the whole buffer with the use of the command", ->
+      # general format test
 
-    atom.config.observe 'jsformat.format_on_save', =>
-      @subscribeToEvents()
+      waitsForPromise ->
+        atom.workspace.open('specfiles/index.js')
 
-  format: (state) ->
-    editor = atom.workspace.activePaneItem
-    if !editor
-      return
+      runs ->
+        @fileText = atom.workspace.getActiveTextEditor().getText()
+        atom.workspaceView.getActiveView().trigger 'jsformat:format'
 
-    grammar = editor.getGrammar()?.scopeName
-    mainCursor = editor.getCursors()[0]
-    textBuffer = editor.getBuffer()
-    nonWhitespaceRegex = /\S/g
-    whitespaceRegex = /\s/g
-    currentCursorPosition = mainCursor.getBufferPosition()
-    mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1])
-    isBeforeWord = mainCursor.isInsideWord()
-    mainCursor.setBufferPosition(currentCursorPosition)
+      runs ->
+        # just check that some whitespace and other goodies got added
+        expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(@fileText)
 
-    if mainCursor.isInsideWord()
-      # The cursor is inside a word, so let's use the beginning as the reference
-      #
-      currentPosition = mainCursor.getBeginningOfCurrentWordBufferPosition()
+    it "can format the whole buffer if Format on save is turned on", ->
+      # format_on_save test
 
-      # ideally we could do mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1]).isInsideWord()
-      # but .setBufferPosition returns undefined :(
-      # So we have to define some stuff above instead...
+      waitsForPromise ->
+        atom.workspace.open('specfiles/index.js')
 
-    else if isBeforeWord
-      # The cursor is right before a word in this case, so let's use the current cursor position as a reference
-      #
-      mainCursor.setBufferPosition(currentCursorPosition)
-      currentPosition = currentCursorPosition
+      runs ->
+        fileText = atom.workspace.getActiveTextEditor().getText()
+        atom.config.set('jsformat.format_on_save', true)
+        atom.workspace.getActiveTextEditor().save()
 
-    whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
+        # just check that some whitespace and other goodies got added
+        expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(fileText)
+        atom.config.set('jsformat.format_on_save', false)
 
-    nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
-    whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
+    it "displays a notification for unsupported languages", ->
+      # NotSupportedNotificationView test
 
-    if !whitespaceCharacterCount
-      whitespaceCharacterCount = 0
-    else
-      whitespaceCharacterCount = whitespaceCharacterCount.length
+      displayUnsupportedLanguageNotification = jasmine.createSpy('format.displayUnsupportedLanguageNotification')
 
-    if !nonWhitespaceCharacters
-      nonWhitespaceCharacters = 0
-    else
-      nonWhitespaceCharacters = nonWhitespaceCharacters.length
+      waitsForPromise ->
+        atom.workspace.open('xyz.coffee')
 
-    if grammar is 'source.json' or grammar is 'source.js'
-      @formatJavascript editor
+      runs ->
+        atom.workspaceView.getActiveView().trigger('jsformat:format')
+        displayUnsupportedLanguageNotification()
 
-      nonWhitespaceCount = 0
-      text = editor.getText()
+        # TODO seems a little stupid to expect something I'm calling, but I can't figure it out, so this is a placeholder
 
-      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCharacters + whitespaceCharacterCount);
-
-      mainCursor.setBufferPosition(newCursorPosition)
-
-    else
-      notification = new FileTypeNotSupportedView(state)
-      atom.workspaceView.append(notification)
-      destroyer = () ->
-        notification.detach()
-
-      setTimeout destroyer, 1500
-
-  formatJavascript: (editor) ->
-    editorSettings = atom.config.get('editor')
-
-    opts = atom.config.get('jsformat')
-
-    opts.indent_size = editorSettings.tabLength
-    opts.wrap_line_length = editorSettings.preferredLineLength
-
-    if @selectionsAreEmpty editor
-      editor.setText(jsbeautify(editor.getText(), opts))
-
-    else
-      for selection in editor.getSelections()
-        selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
-
-  selectionsAreEmpty: (editor) ->
-    for selection in editor.getSelections()
-      return false unless selection.isEmpty()
-    true
-
-  subscribeToEvents: (state) ->
-    if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
-      @editorCreationSubscription = atom.workspace.observeTextEditors (editor) =>
-        grammar = editor.getGrammar().scopeName
-
-        if grammar is 'source.js' or grammar is 'source.json'
-          buffer = editor.getBuffer()
-
-          @editorSaveSubscriptions[editor.id] = buffer.onWillSave =>
-            buffer.transact =>
-              @format(state)
-
-          @editorCloseSubscriptions[editor.id] = buffer.onDidDestroy =>
-            @editorSaveSubscriptions[editor.id].dispose()
-            @editorCloseSubscriptions[editor.id].dispose()
-
-            delete @editorSaveSubscriptions[editor.id]
-            delete @editorCloseSubscriptions[editor.id]
-
-
-          # saveSubscription = buffer.onWillSave =>
-          #   buffer.transact =>
-          #     @format(state)
-          #
-          # closeSubscription = buffer.onDidDestroy =>
-          #   debugger
-          #
-          # @editorSaveSubscriptions.addSubscription(saveSubscription)
-          # @editorCloseSubscriptions.addSubscription(closeSubscription)
-    else
-      if @editorCreationSubscription
-        @editorCreationSubscription.dispose()
-        @editorCreationSubscription = null
-
-        for subscriptionId, subscription of @editorSaveSubscriptions
-          subscription.dispose()
-          delete @editorSaveSubscriptions[subscriptionId]
-
-        for subscriptionId, subscription of @editorCloseSubscriptions
-          subscription.dispose()
-          delete @editorCloseSubscriptions[subscriptionId]
-
-        # @editorSaveSubscriptions.dispose()
-        # @editorSaveSubscriptions = new Observer()
-        #
-        # @editorCloseSubscriptions.dispose()
-        # @editorCloseSubscriptions = new Observer()
+        expect(displayUnsupportedLanguageNotification.calls.length).toEqual(1)
