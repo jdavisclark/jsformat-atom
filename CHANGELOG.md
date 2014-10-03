@@ -1,4 +1,8 @@
-# [0.7.2]()
+# [0.7.3]()
+
+Made retrieving package config simpler and faster
+
+# [0.7.2](4df0961a82b4b3f9c6c5da41f51a0d7716520869)
 
 * Updated JS-Beautify to 1.5.3
 
