@@ -27,3 +27,18 @@ describe "JSFormat package tests", ->
       runs ->
         # just check that some whitespace and other goodies got added
         expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(@fileText)
+
+    it "can format the whole buffer if Format on save is turned on", ->
+      # format_on_save test
+
+      waitsForPromise ->
+        atom.workspace.open('specfiles/index.js')
+
+      runs ->
+        fileText = atom.workspace.getActiveTextEditor().getText()
+        atom.config.set('jsformat.format_on_save', true)
+        atom.workspace.getActiveTextEditor().save()
+
+        # just check that some whitespace and other goodies got added
+        expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(fileText)
+        atom.config.set('jsformat.format_on_save', false)
