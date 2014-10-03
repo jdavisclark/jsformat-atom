@@ -24,7 +24,6 @@ module.exports =
 
   format: (state) ->
     editor = atom.workspace.activePaneItem
-    debugger
     if !editor
       return
 
@@ -87,14 +86,12 @@ module.exports =
       setTimeout destroyer, 1500
 
   formatJavascript: (editor) ->
-    settings = atom.config.getSettings().editor
-    opts = {
-      indent_size: editor.getTabLength(),
-      wrap_line_length: settings.preferredLineLength
-    }
+    editorSettings = atom.config.get('editor')
 
-    for configKey, defaultValue of @configDefaults
-      opts[configKey] = atom.config.get('jsformat.' + configKey) ? defaultValue
+    opts = atom.config.get('jsformat')
+
+    opts.indent_size = editorSettings.tabLength
+    opts.wrap_line_length = editorSettings.preferredLineLength
 
     if @selectionsAreEmpty editor
       editor.setText(jsbeautify(editor.getText(), opts))
