@@ -1,3 +1,7 @@
+# [0.7.2]()
+
+* Updated JS-Beautify to 1.5.3
+
 # [0.7.1](feec74e518a1cee789d3b3131c493e3786fecd19)
 
 * Added support for JS-Beautify's `space_after_anon_function` option.
