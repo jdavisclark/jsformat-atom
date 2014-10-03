@@ -63,6 +63,42 @@ describe "JSFormat package tests", ->
         expect(atom.workspace.getActiveTextEditor().getText()).not.toMatch(fileText)
         atom.config.set('jsformat.format_on_save', false)
 
+    it "can subscribe and unsubscribe to events when format_on_save is enabled", ->
+      # format_on_save test
+
+      waitsForPromise ->
+        atom.packages.activatePackage('jsformat')
+
+      waitsForPromise ->
+        spyOn(format, 'subscribeToEvents').andCallThrough()
+        atom.workspace.open('specfiles/index.js')
+
+      runs ->
+        fileText = atom.workspace.getActiveTextEditor().getText()
+        atom.config.set('jsformat.format_on_save', true)
+        atom.workspace.getActiveTextEditor().save()
+
+        # atom.close()
+        # TODO add a check here to see that the subscriptions were disposed and deleted from the objects
+
+    it "can subscribe and unsubscribe to events when format_on_save is changed", ->
+      # format_on_save test
+
+      waitsForPromise ->
+        atom.packages.activatePackage('jsformat')
+
+      waitsForPromise ->
+        spyOn(format, 'subscribeToEvents').andCallThrough()
+        atom.workspace.open('specfiles/index.js')
+
+      runs ->
+        # check that subscribeToEvents has run
+        expect(format.subscribeToEvents.callCount).toEqual(0)
+        atom.config.set('jsformat.format_on_save', true)
+        expect(format.subscribeToEvents.callCount).toEqual(1)
+        atom.config.set('jsformat.format_on_save', false)
+        expect(format.subscribeToEvents.callCount).toEqual(2)
+
     it "displays a notification for unsupported languages", ->
       # NotSupportedNotificationView test
 
