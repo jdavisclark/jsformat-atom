@@ -27,7 +27,7 @@ module.exports =
     if !editor
       return
 
-    grammar = editor.getGrammar()?.scopeName
+    grammar = editor.getGrammar().scopeName
     mainCursor = editor.getCursors()[0]
     textBuffer = editor.getBuffer()
     nonWhitespaceRegex = /\S/g
@@ -68,7 +68,7 @@ module.exports =
       nonWhitespaceCharacters = nonWhitespaceCharacters.length
 
     if grammar is 'source.json' or grammar is 'source.js'
-      @formatJavascript editor
+      @formatJavascript(editor)
 
       nonWhitespaceCount = 0
       text = editor.getText()
@@ -78,7 +78,7 @@ module.exports =
       mainCursor.setBufferPosition(newCursorPosition)
 
     else
-      @displayUnsupportedLanguageNotification state
+      @displayUnsupportedLanguageNotification(state)
 
   formatJavascript: (editor) ->
     editorSettings = atom.config.get('editor')
@@ -88,7 +88,7 @@ module.exports =
     opts.indent_size = editorSettings.tabLength
     opts.wrap_line_length = editorSettings.preferredLineLength
 
-    if @selectionsAreEmpty editor
+    if @selectionsAreEmpty(editor)
       editor.setText(jsbeautify(editor.getText(), opts))
 
     else
