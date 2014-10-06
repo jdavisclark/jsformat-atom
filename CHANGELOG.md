@@ -1,3 +1,9 @@
+# [0.7.6]()
+
+* Updated JS-Beautify to 1.5.4
+* Better descriptions in the config page
+* More tests
+
 # [0.7.5](330b5cbc654618e142713a95c0147b0ca117fa68)
 
 * Better config page
