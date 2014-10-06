@@ -1,3 +1,7 @@
+# [0.7.7]()
+
+* Fixed regression where closing a tab would throw an error
+
 # [0.7.6](212aace57a36176386dd9891a2a23e7de712bb5f)
 
 * Updated JS-Beautify to 1.5.4
