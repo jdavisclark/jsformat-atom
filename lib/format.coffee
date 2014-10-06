@@ -55,8 +55,8 @@ module.exports =
     nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
     whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
 
-    whitespaceCharacterCount = whitespaceCharacterCount ? whitespaceCharacterCount.length : 0
-    nonWhitespaceCharacters = nonWhitespaceCharacters ? nonWhitespaceCharacters.length : 0
+    whitespaceCharacterCount = if whitespaceCharacterCount then whitespaceCharacterCount.length else 0
+    nonWhitespaceCharacters = if nonWhitespaceCharacters then nonWhitespaceCharacters.length else 0
 
     if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript(editor)
