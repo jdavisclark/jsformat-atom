@@ -126,11 +126,15 @@ module.exports =
         @editorCreationSubscription = null
 
         for subscriptionId, subscription of @editorSaveSubscriptions
+          # unsubscribe to the save event of the editor
           subscription.dispose()
+          # delete the keys to reduce memory usage
           delete @editorSaveSubscriptions[subscriptionId]
 
         for subscriptionId, subscription of @editorCloseSubscriptions
+          # unsubscribe to the save event of the editor
           subscription.dispose()
+          # delete the keys to reduce memory usage
           delete @editorCloseSubscriptions[subscriptionId]
 
         # @editorSaveSubscriptions.dispose()
