@@ -1,4 +1,4 @@
-# [0.7.6]()
+# [0.7.6](212aace57a36176386dd9891a2a23e7de712bb5f)
 
 * Updated JS-Beautify to 1.5.4
 * Better descriptions in the config page
