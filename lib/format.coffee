@@ -39,7 +39,6 @@ module.exports =
 
     if mainCursor.isInsideWord()
       # The cursor is inside a word, so let's use the beginning as the reference
-      #
       currentPosition = mainCursor.getBeginningOfCurrentWordBufferPosition()
 
       # ideally we could do mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1]).isInsideWord()
@@ -48,7 +47,6 @@ module.exports =
 
     else if isBeforeWord
       # The cursor is right before a word in this case, so let's use the current cursor position as a reference
-      #
       mainCursor.setBufferPosition(currentCursorPosition)
       currentPosition = currentCursorPosition
 
@@ -57,15 +55,8 @@ module.exports =
     nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
     whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
 
-    if !whitespaceCharacterCount
-      whitespaceCharacterCount = 0
-    else
-      whitespaceCharacterCount = whitespaceCharacterCount.length
-
-    if !nonWhitespaceCharacters
-      nonWhitespaceCharacters = 0
-    else
-      nonWhitespaceCharacters = nonWhitespaceCharacters.length
+    whitespaceCharacterCount = whitespaceCharacterCount ? whitespaceCharacterCount.length : 0
+    nonWhitespaceCharacters = nonWhitespaceCharacters ? nonWhitespaceCharacters.length : 0
 
     if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript(editor)
