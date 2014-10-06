@@ -1,4 +1,4 @@
-# [0.7.7]()
+# [0.7.7](357ee8761a801f505305fadd475a13255eb18b73)
 
 * Fixed regression where closing a tab would throw an error
 
