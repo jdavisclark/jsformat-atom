@@ -7,6 +7,9 @@ module.exports =
   indent_with_tabs:
     type: 'boolean'
     default: false
+  end_with_newline:
+    type: 'boolean'
+    default: true
   max_preserve_newlines:
     type: 'integer'
     default: 4
