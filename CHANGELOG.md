@@ -1,3 +1,7 @@
+#[0.7.9]()
+
+* Smarter Format on save
+
 # [0.7.8](140ace97c44f2b3343dd80a8fa34ed5437c121a2)
 
 * Added `end_with_newline` setting.
