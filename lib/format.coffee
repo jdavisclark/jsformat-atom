@@ -100,8 +100,9 @@ module.exports =
           buffer = editor.getBuffer()
 
           @editorSaveSubscriptions[editor.id] = buffer.onWillSave =>
-            buffer.transact =>
-              @format(state)
+            if buffer.isModified()
+              buffer.transact =>
+                @format(state)
 
           @editorCloseSubscriptions[editor.id] = buffer.onDidDestroy =>
             @editorSaveSubscriptions[editor.id].dispose()
