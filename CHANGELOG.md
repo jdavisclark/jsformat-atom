@@ -1,3 +1,8 @@
+#[0.7.10]()
+
+* Updated dependencies
+  * [atom/event-kit](https://github.com/atom/event-kit) 0.7.2 -> 0.8.0
+
 #[0.7.9](3eaff5c7a0fd8ca0cf707a9128d6268f9928a6de)
 
 * Smarter Format on save
