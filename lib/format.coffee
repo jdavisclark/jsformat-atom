@@ -32,35 +32,35 @@ module.exports =
     if (!(grammar is 'JSON' or grammar is 'JavaScript'))
       @displayUnsupportedLanguageNotification(grammar)
     else
-    mainCursor = editor.getCursors()[0]
-    textBuffer = editor.getBuffer()
-    nonWhitespaceRegex = /\S/g
-    whitespaceRegex = /\s/g
-    currentCursorPosition = mainCursor.getBufferPosition()
-    mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1])
-    isBeforeWord = mainCursor.isInsideWord()
-    mainCursor.setBufferPosition(currentCursorPosition)
-
-    if mainCursor.isInsideWord()
-      # The cursor is inside a word, so let's use the beginning as the reference
-      currentPosition = mainCursor.getBeginningOfCurrentWordBufferPosition()
-
-      # ideally we could do mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1]).isInsideWord()
-      # but .setBufferPosition returns undefined :(
-      # So we have to define some stuff above instead...
-
-    else if isBeforeWord
-      # The cursor is right before a word in this case, so let's use the current cursor position as a reference
+      mainCursor = editor.getCursors()[0]
+      textBuffer = editor.getBuffer()
+      nonWhitespaceRegex = /\S/g
+      whitespaceRegex = /\s/g
+      currentCursorPosition = mainCursor.getBufferPosition()
+      mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1])
+      isBeforeWord = mainCursor.isInsideWord()
       mainCursor.setBufferPosition(currentCursorPosition)
-      currentPosition = currentCursorPosition
 
-    whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
+      if mainCursor.isInsideWord()
+        # The cursor is inside a word, so let's use the beginning as the reference
+        currentPosition = mainCursor.getBeginningOfCurrentWordBufferPosition()
 
-    nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
-    whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
+        # ideally we could do mainCursor.setBufferPosition([currentCursorPosition.row, currentCursorPosition.column + 1]).isInsideWord()
+        # but .setBufferPosition returns undefined :(
+        # So we have to define some stuff above instead...
 
-    whitespaceCharacterCount = if whitespaceCharacterCount then whitespaceCharacterCount.length else 0
-    nonWhitespaceCharacters = if nonWhitespaceCharacters then nonWhitespaceCharacters.length else 0
+      else if isBeforeWord
+        # The cursor is right before a word in this case, so let's use the current cursor position as a reference
+        mainCursor.setBufferPosition(currentCursorPosition)
+        currentPosition = currentCursorPosition
+
+      whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
+
+      nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
+      whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
+
+      whitespaceCharacterCount = if whitespaceCharacterCount then whitespaceCharacterCount.length else 0
+      nonWhitespaceCharacters = if nonWhitespaceCharacters then nonWhitespaceCharacters.length else 0
 
       @formatJavascript(editor)
 
