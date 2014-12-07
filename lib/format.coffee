@@ -23,11 +23,15 @@ module.exports =
       @subscribeToEvents()
 
   format: (state) ->
-    editor = atom.workspace.activePaneItem
+    editor = atom.workspace.getActivePaneItem()
     if !editor
       return
 
-    grammar = editor.getGrammar().scopeName
+    grammar = editor.getGrammar().name
+
+    if (!(grammar is 'JSON' or grammar is 'JavaScript'))
+      @displayUnsupportedLanguageNotification(grammar)
+    else
     mainCursor = editor.getCursors()[0]
     textBuffer = editor.getBuffer()
     nonWhitespaceRegex = /\S/g
@@ -58,7 +62,6 @@ module.exports =
     whitespaceCharacterCount = if whitespaceCharacterCount then whitespaceCharacterCount.length else 0
     nonWhitespaceCharacters = if nonWhitespaceCharacters then nonWhitespaceCharacters.length else 0
 
-    if grammar is 'source.json' or grammar is 'source.js'
       @formatJavascript(editor)
 
       nonWhitespaceCount = 0
@@ -67,9 +70,6 @@ module.exports =
       newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCharacters + whitespaceCharacterCount);
 
       mainCursor.setBufferPosition(newCursorPosition)
-
-    else
-      @displayUnsupportedLanguageNotification(state)
 
   formatJavascript: (editor) ->
     editorSettings = atom.config.get('editor')
@@ -144,8 +144,8 @@ module.exports =
         # @editorCloseSubscriptions.dispose()
         # @editorCloseSubscriptions = new Observer()
 
-  displayUnsupportedLanguageNotification: (state) ->
-    notification = new FileTypeNotSupportedView(state)
+  displayUnsupportedLanguageNotification: (language) ->
+    notification = new FileTypeNotSupportedView(language)
     atom.workspaceView.append(notification)
     destroyer = () ->
       notification.detach()

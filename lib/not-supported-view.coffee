@@ -3,9 +3,9 @@ path = require 'path'
 
 module.exports =
 class NotSupportedNotificationView extends View
-  constructor: (state, @message) ->
-    this.message = @message
-    super(state)
+  constructor: (@fileType) ->
+    this.fileType = @fileType
+    super()
 
   @content: ->
     editor = atom.workspace.activePaneItem
