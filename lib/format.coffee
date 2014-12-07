@@ -11,7 +11,7 @@ module.exports =
   config: packgeConfig
 
   activate: (state) ->
-    atom.workspaceView.command 'jsformat:format', => @format(state)
+    atom.commands.add 'atom-workspace', 'jsformat:format', => @format(state)
 
     @editorSaveSubscriptions = {}
     @editorCloseSubscriptions = {}

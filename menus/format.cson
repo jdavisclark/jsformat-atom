@@ -1,15 +1,15 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
   '.overlayer':
-      'Enable JsFormat': 'jsformat:format'
+      'Enable JSFormat': 'jsformat:format'
 
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'JsFormat'
+      'label': 'JSFormat'
       'submenu': [
-        { 'label': 'Format Javascript', 'command': 'jsformat:format' }
+        { 'label': 'Format JavaScript', 'command': 'jsformat:format' }
       ]
     ]
   }
