@@ -1,4 +1,9 @@
-#[0.7.11]()
+#[0.7.12]()
+
+* Fixed some deprecation messages
+* Updated command palette info
+
+#[0.7.11](28f0093925f28302390edff166aeb63e584834ee)
 
 * Performance improvements
   * Checking file language before doing anything else
