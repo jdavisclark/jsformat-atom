@@ -79,12 +79,15 @@ module.exports =
     opts.indent_size = editorSettings.tabLength
     opts.wrap_line_length = editorSettings.preferredLineLength
 
-    if @selectionsAreEmpty(editor)
-      editor.setText(jsbeautify(editor.getText(), opts))
+    beautifiedText = jsbeautify(editor.getText(), opts)
 
-    else
-      for selection in editor.getSelections()
-        selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
+    if (editor.getText() != beautifiedText)
+      if @selectionsAreEmpty(editor)
+        editor.setText(jsbeautify(editor.getText(), opts))
+
+      else
+        for selection in editor.getSelections()
+          selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
 
   selectionsAreEmpty: (editor) ->
     for selection in editor.getSelections()
@@ -110,7 +113,6 @@ module.exports =
 
             delete @editorSaveSubscriptions[editor.id]
             delete @editorCloseSubscriptions[editor.id]
-
 
           # saveSubscription = buffer.onWillSave =>
           #   buffer.transact =>
