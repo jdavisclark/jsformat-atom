@@ -1,4 +1,4 @@
-#[0.7.12]()
+#[0.7.12](949eb2305ea52c5836c08b2c034c0d4ff7d151cb)
 
 * Fixed some deprecation messages
 * Updated command palette info
