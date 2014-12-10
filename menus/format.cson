@@ -7,10 +7,15 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'JSFormat'
-      'submenu': [
-        { 'label': 'Format JavaScript', 'command': 'jsformat:format' }
-      ]
+      {
+        'label': 'JSFormat'
+        'submenu': [
+          {
+            'label': 'Format JavaScript',
+            'command': 'jsformat:format'
+          }
+        ]
+      }
     ]
   }
 ]
