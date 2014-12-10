@@ -1,4 +1,4 @@
-#[0.7.13]()
+#[0.7.13](1039677dd3e59200b8dacea75f15b85ea0cd0800)
 
 * Fixed keybindings not working
 * Fixed package not being labeled properly in command palette
