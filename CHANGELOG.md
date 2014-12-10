@@ -1,3 +1,8 @@
+#[0.7.13]()
+
+* Fixed keybindings not working
+* Fixed package not being labeled properly in command palette
+
 #[0.7.12](949eb2305ea52c5836c08b2c034c0d4ff7d151cb)
 
 * Fixed some deprecation messages
