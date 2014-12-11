@@ -108,8 +108,8 @@ module.exports =
                 @format(state)
 
           @editorCloseSubscriptions[editor.id] = buffer.onDidDestroy =>
-            @editorSaveSubscriptions[editor.id].dispose()
-            @editorCloseSubscriptions[editor.id].dispose()
+            @editorSaveSubscriptions[editor.id]?.dispose()
+            @editorCloseSubscriptions[editor.id]?.dispose()
 
             delete @editorSaveSubscriptions[editor.id]
             delete @editorCloseSubscriptions[editor.id]
