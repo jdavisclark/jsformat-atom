@@ -1,4 +1,4 @@
-#[0.7.15]()
+#[0.7.15](f480d7ba6453dd7d3a10c3bcbe51421e75caed0f)
 
 * Fixed error on preferences page
 * Small performance optimizations when formatting text
