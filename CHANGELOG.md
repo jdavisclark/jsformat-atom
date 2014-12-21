@@ -1,6 +1,11 @@
+#[0.7.15]()
+
+* Fixed error on preferences page
+* Small performance optimizations when formatting text
+
 #[0.7.14](21007152bf3e60990fe38fb22f01f85f41f6782c)
 
-* Possible fix for `cannot dispose of undefined` error
+* Possible fix for `cannot dispose of undefined` error (UPDATE: Not fixed)
 
 #[0.7.13](1039677dd3e59200b8dacea75f15b85ea0cd0800)
 
