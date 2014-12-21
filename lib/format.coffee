@@ -23,7 +23,7 @@ module.exports =
       @subscribeToEvents()
 
   format: (state) ->
-    editor = atom.workspace.getActivePaneItem()
+    editor = atom.workspace.getActiveTextEditor()
     if !editor
       return
 
@@ -75,24 +75,24 @@ module.exports =
     editorSettings = atom.config.get('editor')
 
     opts = atom.config.get('jsformat')
-
     opts.indent_size = editorSettings.tabLength
     opts.wrap_line_length = editorSettings.preferredLineLength
 
-    beautifiedText = jsbeautify(editor.getText(), opts)
+    editorText = editor.getText()
+    beautifiedText = jsbeautify(editorText, opts)
 
-    if (editor.getText() != beautifiedText)
+    if (editorText != beautifiedText)
       if @selectionsAreEmpty(editor)
-        editor.setText(jsbeautify(editor.getText(), opts))
+        editor.setText(beautifiedText)
 
       else
         for selection in editor.getSelections()
-          selection.insertText(jsbeautify(selection.getText(), opts), {select:true})
+          selection.insertText(jsbeautify(selection.getText(), opts), { select: true })
 
   selectionsAreEmpty: (editor) ->
     for selection in editor.getSelections()
       return false unless selection.isEmpty()
-    true
+    return true
 
   subscribeToEvents: (state) ->
     if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
