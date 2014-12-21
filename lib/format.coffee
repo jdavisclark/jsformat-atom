@@ -31,6 +31,8 @@ module.exports =
 
     if (!(grammar is 'JSON' or grammar is 'JavaScript'))
       @displayUnsupportedLanguageNotification(grammar)
+    else if (atom.config.get('jsformat.ignore_files').indexOf(editor.getTitle()) != -1)
+      return
     else
       mainCursor = editor.getCursors()[0]
       textBuffer = editor.getBuffer()
@@ -95,7 +97,7 @@ module.exports =
     return true
 
   subscribeToEvents: (state) ->
-    if atom.config.get('jsformat.format_on_save') ? @configDefaults['format_on_save']
+    if (atom.config.get('jsformat.format_on_save'))
       @editorCreationSubscription = atom.workspace.observeTextEditors (editor) =>
         grammar = editor.getGrammar().scopeName
 

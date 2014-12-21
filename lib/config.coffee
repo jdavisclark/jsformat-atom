@@ -1,9 +1,9 @@
 # config schema
 module.exports =
   format_on_save:
+    description: 'JSFormat will format the file before it is saved'
     type: 'boolean'
     default: true
-    description: 'JSFormat will format the file before it is saved'
   indent_with_tabs:
     type: 'boolean'
     default: false
@@ -17,13 +17,13 @@ module.exports =
     type: 'boolean'
     default: true
   space_in_paren:
-    type: 'boolean'
-    default: false
     title: 'Space in parentheses'
-  jslint_happy:
     type: 'boolean'
     default: false
+  jslint_happy:
     title: 'JSLint happy'
+    type: 'boolean'
+    default: false
   brace_style:
     type: 'string'
     default: 'collapse'
@@ -35,16 +35,16 @@ module.exports =
     type: 'boolean'
     default: false
   space_after_anon_function:
+    title: 'Space after anonymous functions'
     type: 'boolean'
     default: false
-    title: 'Space after anonymous functions'
   space_before_conditional:
     type: 'boolean'
     default: true
   eval_code:
+    title: 'Evaluate code'
     type: 'boolean'
     default: false
-    title: 'Evaluate code'
   unescape_strings:
     type: 'boolean'
     default: false
@@ -52,6 +52,11 @@ module.exports =
     type: 'boolean'
     default: false
   e4x:
+    title: 'e4x style'
     type: 'boolean'
     default: false
-    title: 'e4x style'
+  ignore_files:
+    type: 'array'
+    default: ['.jshintrc']
+    items:
+      type: 'string'
