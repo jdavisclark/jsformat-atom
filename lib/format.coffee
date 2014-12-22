@@ -56,20 +56,19 @@ module.exports =
         mainCursor.setBufferPosition(currentCursorPosition)
         currentPosition = currentCursorPosition
 
-      whitespaceText = textBuffer.getTextInRange([[0, 0], currentPosition])
+      textuntilCursor = textBuffer.getTextInRange([[0, 0], currentPosition])
 
-      nonWhitespaceCharacters = whitespaceText.match(nonWhitespaceRegex)
-      whitespaceCharacterCount = whitespaceText.match(whitespaceRegex)
+      nonWhitespaceCharacters = textuntilCursor.match(nonWhitespaceRegex)
+      whitespaceCharacters = textuntilCursor.match(whitespaceRegex)
 
-      whitespaceCharacterCount = if whitespaceCharacterCount then whitespaceCharacterCount.length else 0
       nonWhitespaceCharacters = if nonWhitespaceCharacters then nonWhitespaceCharacters.length else 0
+      whitespaceCharacters = if whitespaceCharacters then whitespaceCharacters.length else 0
 
       @formatJavascript(editor)
 
-      nonWhitespaceCount = 0
       text = editor.getText()
 
-      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCharacters + whitespaceCharacterCount);
+      newCursorPosition = textBuffer.positionForCharacterIndex(nonWhitespaceCharacters + whitespaceCharacters);
 
       mainCursor.setBufferPosition(newCursorPosition)
 
