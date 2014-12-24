@@ -1,4 +1,4 @@
-#[0.7.18]()
+#[0.7.18](2b6854304a0b32514608c71763105a8e63478ed9)
 
 * Indentation style is now based on editor setting and not JSFormat's setting
 
