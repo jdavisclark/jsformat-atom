@@ -1,3 +1,7 @@
+#[0.7.18]()
+
+* Indentation style is now based on editor setting and not JSFormat's setting
+
 #[0.7.17](7381fa3ba031aeaf0e74f1542b10130176ae5eb2)
 
 * Code cleanup
