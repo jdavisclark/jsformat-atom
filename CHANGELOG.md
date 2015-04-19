@@ -1,3 +1,7 @@
+#[0.8.0](29c3e5c7c92198e66b0980f9287b6c0607346d23)
+
+* Fix deprecation issues with Atom 1.0 API
+
 #[0.7.18](2b6854304a0b32514608c71763105a8e63478ed9)
 
 * Indentation style is now based on editor setting and not JSFormat's setting
