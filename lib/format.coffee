@@ -76,7 +76,7 @@ module.exports =
     editorSettings = atom.config.get('editor')
 
     opts = atom.config.get('jsformat')
-    opts.indent_with_tabs = editor.getSoftTabs()
+    opts.indent_with_tabs = !editor.getSoftTabs()
     opts.indent_size = editorSettings.tabLength
     opts.wrap_line_length = editorSettings.preferredLineLength
 
