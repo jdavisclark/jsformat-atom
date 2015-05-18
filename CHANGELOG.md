@@ -1,3 +1,7 @@
+#[0.8.1](9da3be4f1e09cf2abcb34d2fa5410c1ce94071fc)
+
+* Fix CSON format deprecation
+
 #[0.8.0](29c3e5c7c92198e66b0980f9287b6c0607346d23)
 
 * Fix deprecation issues with Atom 1.0 API
