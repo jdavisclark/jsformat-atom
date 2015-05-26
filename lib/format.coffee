@@ -29,7 +29,7 @@ module.exports =
 
     grammar = editor.getGrammar().name
 
-    if (!(grammar is 'JSON' or grammar is 'JavaScript'))
+    if (!(grammar is 'JSON' or /JavaScript/.test(grammar)))
       @displayUnsupportedLanguageNotification(grammar)
     else if (atom.config.get('jsformat.ignore_files').indexOf(editor.getTitle()) != -1)
       return
