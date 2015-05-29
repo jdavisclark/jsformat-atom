@@ -55,6 +55,10 @@ module.exports =
     title: 'e4x style'
     type: 'boolean'
     default: false
+  comma_first:
+    title: 'comma first'
+    type: 'boolean'
+    default: false
   ignore_files:
     type: 'array'
     default: ['.jshintrc']
