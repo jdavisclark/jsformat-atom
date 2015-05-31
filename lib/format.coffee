@@ -150,7 +150,7 @@ module.exports =
 
   displayUnsupportedLanguageNotification: (language) ->
     notification = new FileTypeNotSupportedView(language)
-    atom.workspaceView.append(notification)
+    atom.views.getView(atom.workspace).append(notification)
     destroyer = () ->
       notification.detach()
 

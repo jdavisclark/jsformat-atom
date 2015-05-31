@@ -8,7 +8,7 @@ class NotSupportedNotificationView extends View
     super()
 
   @content: ->
-    editor = atom.workspace.activePaneItem
+    editor = atom.workspace.getActivePaneItem()
     title = editor.getTitle()
     ext = path.extname title
     message = ext.length > 0 ? ext : title
