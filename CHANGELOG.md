@@ -1,3 +1,9 @@
+#[0.9.0](34060f0b30a406c7d2baac954da8a124fa51fd72)
+
+* Fix 1.0 API deprecations
+* Add JS Beautify comma first option
+* Add support for other JavaScript syntax highlighting grammars
+
 #[0.8.1](9da3be4f1e09cf2abcb34d2fa5410c1ce94071fc)
 
 * Fix CSON format deprecation
