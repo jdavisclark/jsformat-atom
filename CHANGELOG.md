@@ -1,3 +1,7 @@
+#[0.9.1]()
+
+* Fix Unsupported Language Notification using deprecated API
+
 #[0.9.0](34060f0b30a406c7d2baac954da8a124fa51fd72)
 
 * Fix 1.0 API deprecations
