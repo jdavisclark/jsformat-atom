@@ -150,7 +150,7 @@ module.exports =
         # @editorCloseSubscriptions = new Observer()
 
   displayUnsupportedLanguageNotification: (language) ->
-   title = editor.getTitle()
+    title = editor.getTitle()
     ext = path.extname title
     message = ext.length > 0 ? ext : title
     atom.notifications.addWarning("Formatting '#{message}' files is not yet supported.", { dismissable: true });
