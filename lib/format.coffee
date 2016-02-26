@@ -2,6 +2,7 @@
  Package dependencies
 ###
 jsbeautify = (require 'js-beautify').js_beautify
+path = require 'path'
 
 packgeConfig = require './config'
 Observer = require './observer'
@@ -149,9 +150,7 @@ module.exports =
         # @editorCloseSubscriptions = new Observer()
 
   displayUnsupportedLanguageNotification: (language) ->
-    notification = new FileTypeNotSupportedView(language)
-    atom.views.getView(atom.workspace).append(notification)
-    destroyer = () ->
-      notification.detach()
-
-    setTimeout destroyer, 1500
+   title = editor.getTitle()
+    ext = path.extname title
+    message = ext.length > 0 ? ext : title
+    atom.notifications.addWarning("Formatting '#{message}' files is not yet supported.", { dismissable: true });
