@@ -150,6 +150,7 @@ module.exports =
         # @editorCloseSubscriptions = new Observer()
 
   displayUnsupportedLanguageNotification: (language) ->
+    editor = atom.workspace.getActiveTextEditor()
     title = editor.getTitle()
     ext = path.extname title
     message = ext.length > 0 ? ext : title
