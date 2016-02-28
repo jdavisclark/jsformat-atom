@@ -1,4 +1,4 @@
-#[0.9.3]()
+#[0.9.3](4d757524c86bdb79412ad88bfe0bdd9cfa0ec4e3)
 
 * Fix undefined editor error (#69)
 
