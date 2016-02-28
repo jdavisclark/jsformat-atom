@@ -1,3 +1,7 @@
+#[0.9.3]()
+
+* Fix undefined editor error (#69)
+
 #[0.9.2](9e8566eef41084727a93f58f3a613503bff5a06e)
 
 * Fix indentation error
