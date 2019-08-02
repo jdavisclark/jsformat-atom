@@ -1,7 +1,7 @@
 {
   "name": "jsformat",
   "main": "./lib/format",
-  "version": "0.9.3",
+  "version": "1.0.0",
   "private": true,
   "description": "javascript formatting for the atom text editor",
   "keywords": [
@@ -13,12 +13,14 @@
   "activationCommands": [],
   "repository": "https://github.com/jdc0589/jsformat-atom",
   "license": "MIT",
-  "engines": {
+  "engines":
+  {
     "atom": ">=0.100.0"
   },
-  "dependencies": {
+  "dependencies":
+  {
     "event-kit": "~0.8.1",
-    "js-beautify": "~1.5.4",
+    "js-beautify": "^1.9.0",
     "atom-space-pen-views": "~2.0.3"
   }
 }
